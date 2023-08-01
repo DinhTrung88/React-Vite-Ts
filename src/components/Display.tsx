@@ -2,12 +2,12 @@ import * as React from 'react'
 
 export interface Job {
   content: string
-  id?: number
+  id: number
 }
 
 interface IDisplayProps {
-  onEdit: (param: number | undefined) => void
-  handleRemove: (param: number | undefined) => void
+  onEdit: (param: number) => void
+  handleRemove: (param: number) => void
   job: Job
 }
 

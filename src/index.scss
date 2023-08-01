@@ -23,42 +23,19 @@ body {
     margin-top: 30px;
   }
 }
-
 .content {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
-.content button {
-  height: 40px;
-  border-radius: 10px;
-  margin-left: 10px;
-  border: 1px solid #ccc;
-  padding: 0px 10px;
-  cursor: pointer;
-  outline: none;
-  // &:hover {
-  //   cursor: pointer;
-  //   opacity: 0.8;
-  // }
-  &:disabled {
-    color: #333;
-    cursor: default;
-    pointer-events: none;
-  }
-}
-
 .content input {
   width: 100%;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 9px;
   border: 1px solid #ccc;
   outline: none;
   padding: 0 10px;
   font-size: 14px;
-}
-.input-children {
-  flex: 1;
 }
 #list-container {
   margin-top: 10px;
@@ -70,8 +47,8 @@ body {
   list-style: none;
   padding-left: unset;
   border: 1px solid #ccc;
-  background-color: #fdf6f6;
-  border-radius: 10px;
+  background-color: #fffbfb;
+  border-radius: 9px;
   height: 40px;
   margin-bottom: 10px;
   line-height: 40px;

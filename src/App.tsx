@@ -16,9 +16,7 @@ function App() {
   }, [])
   const handleAdd = () => {
     if (!job) return
-    const newJob: Job = {
-      content: job,
-    }
+
     fetch('http://localhost:8000/posts', {
       method: 'POST',
       headers: {
@@ -28,7 +26,7 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        const updatedjobList = [...jobList, { ...newJob, id: data.id }]
+        const updatedjobList = [...jobList, { content: job, id: data.id }]
         setJobList(updatedjobList)
       })
       .catch((error) => {
@@ -36,13 +34,11 @@ function App() {
       })
 
     setJob('')
-    console.log(inputRef.current)
-
     if (!inputRef.current) return
     inputRef.current.focus()
   }
 
-  const handleRemove = async (id: number | undefined) => {
+  const handleRemove = async (id: number) => {
     if (!id) return
     try {
       await fetch(`http://localhost:8000/posts/${id}`, {
@@ -57,7 +53,7 @@ function App() {
     if (!inputRef.current) return
     inputRef.current.focus()
   }
-  const onEdit = (id: number | undefined) => {
+  const onEdit = (id: number) => {
     setSaveId(id)
     let find = jobList.find((job) => job.id === id)
     setJob(find?.content ?? '')
@@ -86,25 +82,25 @@ function App() {
     if (!inputRef.current) return
     inputRef.current.focus()
   }
-
   const handleSetJob = (job: string) => setJob(job)
-  console.log('test')
-
   return (
     <div className="app">
       <div className="app_list">
         <h1>TODO LIST</h1>
         <div className="content">
           <Input handleSetJob={handleSetJob} job={job} inputRef={inputRef} />
-          <button onClick={handleAdd}>Add</button>
-          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleAdd} type="button" className="btn btn-primary ms-2">
+            Add
+          </button>
+          <button onClick={handleEdit} type="button" className="btn btn-primary ms-2">
+            Edit
+          </button>
         </div>
         <div id="list-container">
           {jobList.map((job) => (
             <Display key={job.id} job={job} onEdit={onEdit} handleRemove={handleRemove} />
           ))}
         </div>
-        <div className="details"></div>
       </div>
     </div>
   )
