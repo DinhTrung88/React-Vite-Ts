@@ -83,6 +83,7 @@ function App() {
     inputRef.current.focus()
   }
   const handleSetJob = (job: string) => setJob(job)
+  console.log('abc')
   return (
     <div className="app">
       <div className="app_list">
