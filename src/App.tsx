@@ -88,6 +88,7 @@ function App() {
   }
 
   const handleSetJob = (job: string) => setJob(job)
+  console.log('test')
 
   return (
     <div className="app">
