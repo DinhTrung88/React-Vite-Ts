@@ -6,12 +6,12 @@ export interface Job {
 }
 
 interface IDisplayProps {
-  onFix: (param: number | undefined) => void
+  onEdit: (param: number | undefined) => void
   handleRemove: (param: number | undefined) => void
   job: Job
 }
 
-export default function Display({ job, onFix, handleRemove }: IDisplayProps) {
+export default function Display({ job, onEdit, handleRemove }: IDisplayProps) {
   return (
     <div>
       <ul className="list-content" key={job.id}>
@@ -19,7 +19,7 @@ export default function Display({ job, onFix, handleRemove }: IDisplayProps) {
           <p>{job.content}</p>
         </li>
         <li>
-          <i onClick={() => onFix(job.id)} className="fa-solid fa-wrench"></i>
+          <i onClick={() => onEdit(job.id)} className="fa-solid fa-wrench"></i>
           <i onClick={() => handleRemove(job.id)} className="fa-solid fa-trash"></i>
         </li>
       </ul>

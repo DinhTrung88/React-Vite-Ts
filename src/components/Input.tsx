@@ -17,13 +17,13 @@
 import { Dispatch, RefObject, SetStateAction, ChangeEvent } from 'react'
 interface InputProps {
   job: string
-  setJob: Dispatch<SetStateAction<string>>
+  handleSetJob: (job: string) => void
   inputRef: RefObject<HTMLInputElement>
 }
 
-const Input: React.FC<InputProps> = ({ job, setJob, inputRef }) => {
+const Input: React.FC<InputProps> = ({ job, handleSetJob, inputRef }) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setJob(e.target.value)
+    handleSetJob(e.target.value)
     if (!inputRef.current) return
     inputRef.current.focus()
   }

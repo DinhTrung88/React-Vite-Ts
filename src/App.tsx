@@ -7,12 +7,12 @@ import { Job } from './components/Display'
 import { getApi } from './components/callApi'
 function App() {
   const [job, setJob] = useState<string>('')
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobList, setJobList] = useState<Job[]>([])
   const [saveId, setSaveId] = useState<number>()
   const inputRef: RefObject<HTMLInputElement> = useRef(null)
   useEffect(() => {
     const res = getApi()
-    res.then((data) => setJobs(data))
+    res.then((data) => setJobList(data))
   }, [])
   const handleAdd = () => {
     if (!job) return
@@ -28,8 +28,8 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        const updatedJobs = [...jobs, { ...newJob, id: data.id }]
-        setJobs(updatedJobs)
+        const updatedjobList = [...jobList, { ...newJob, id: data.id }]
+        setJobList(updatedjobList)
       })
       .catch((error) => {
         console.error('Error adding job:', error)
@@ -48,24 +48,24 @@ function App() {
       await fetch(`http://localhost:8000/posts/${id}`, {
         method: 'DELETE',
       })
-      const updatedJobs = jobs.filter((job) => job.id !== id)
+      const updatedjobList = jobList.filter((job) => job.id !== id)
 
-      setJobs(updatedJobs)
+      setJobList(updatedjobList)
     } catch (error) {
       console.error('Error removing job:', error)
     }
     if (!inputRef.current) return
     inputRef.current.focus()
   }
-  const onFix = (id: number | undefined) => {
+  const onEdit = (id: number | undefined) => {
     setSaveId(id)
-    let find = jobs.find((job) => job.id === id)
+    let find = jobList.find((job) => job.id === id)
     setJob(find?.content ?? '')
     if (!inputRef.current) return
     inputRef.current.focus()
   }
 
-  const handleFixs = async () => {
+  const handleEdit = async () => {
     if (job === '' || saveId === undefined) return
     let res = await fetch(`http://localhost:8000/posts/${saveId}`, {
       method: 'PUT',
@@ -76,11 +76,10 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        let find = jobs.findIndex((job) => job.id == saveId)
-        const updateJobs = [...jobs]
-        updateJobs[find] = { content: job, id: data.id }
-        setJobs(updateJobs)
+        let find = jobList.findIndex((job) => job.id == saveId)
+        const updatejobList = [...jobList]
+        updatejobList[find] = { content: job, id: data.id }
+        setJobList(updatejobList)
         setJob('')
       })
     setSaveId(undefined)
@@ -95,13 +94,13 @@ function App() {
       <div className="app_list">
         <h1>TODO LIST</h1>
         <div className="content">
-          <Input setJob={setJob} job={job} inputRef={inputRef} />
+          <Input handleSetJob={handleSetJob} job={job} inputRef={inputRef} />
           <button onClick={handleAdd}>Add</button>
-          <button onClick={handleFixs}>Fix</button>
+          <button onClick={handleEdit}>Edit</button>
         </div>
         <div id="list-container">
-          {jobs.map((job) => (
-            <Display key={job.id} job={job} onFix={onFix} handleRemove={handleRemove} />
+          {jobList.map((job) => (
+            <Display key={job.id} job={job} onEdit={onEdit} handleRemove={handleRemove} />
           ))}
         </div>
         <div className="details"></div>
